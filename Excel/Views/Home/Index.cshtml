@@ -1,0 +1,69 @@
+﻿@model String
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 id="wel" class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<br />
+
+<div class="text-center">
+    <h2>Import Excel</h2>
+
+    @if (Model != null)
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="container">
+                    <div class="badge-danger">
+                        <h1>@Model</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <br />
+
+    <form asp-action="Index" asp-controller="Home" method="post" enctype="multipart/form-data">
+        <select class="form-control" id="selectlist" name="entityName">
+            <option value="">....</option>
+            <option value="1">sample</option>
+            <option value="2">relations</option>
+            <option value="3">both</option>
+        </select>
+        <br />
+        <input type="file" class="form-control" name="file" id="fileInput" />
+        <br />
+        <button type="submit" class="btn btn-warning" id="import">Import excel or csv</button>
+    </form>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $("#import").prop("disabled", true);
+            $("#fileInput").prop("disabled", true);
+            $("#fileInput").attr("title", "first you have to choos an entity");
+        });
+
+        $("#selectlist").on("change", function () {
+
+            if ($("#selectlist option:selected")) {
+                $("#fileInput").prop("disabled", false);
+            }
+        });
+
+        $("#fileInput").on("change", function () {
+
+            if ($("#import").val != null) {
+
+                $("#import").prop("disabled", false);
+            }
+        });
+    </script>
+}
